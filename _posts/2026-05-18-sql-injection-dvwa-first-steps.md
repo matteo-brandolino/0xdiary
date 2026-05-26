@@ -107,7 +107,7 @@ curl "http://localhost/vulnerabilities/sqli/?id=1'--+&Submit=Submit" \
 Once both issues were fixed, I tried the canonical payload:
 
 ```
-?id=1' OR 1=1-- +&Submit=Submit
+?id='+OR+1=1--+
 ```
 
 And finally: all five DVWA users dumped onto the page (admin, gordonb, 1337, pablo, smithy). Genuine satisfaction.
@@ -127,30 +127,6 @@ Three things happen together:
 3. **`-- ` neutralizes the tail.** After my input, the original code still had `'` and `;` waiting. The line comment sends them to the bin so they don't break the syntax.
 
 This triad — **break the context, inject logic, neutralize the tail** — is the general pattern of nearly every SQLi. What changes from case to case is the context you have to break: single-quoted string, double-quoted string, unquoted integer, inside a `LIKE`, inside `IN()`, inside `ORDER BY`. Each one needs its own opening and closing.
-
-## What comes next: enumeration with UNION
-
-The bypass is the "Hello World" of SQLi. The interesting part is using the injected query to **extract arbitrary data**, not just to skip a filter. The weapon is `UNION SELECT`.
-
-`UNION` combines the rows of two `SELECT` queries, as long as they return the same number of columns. So the first step is figuring out how many columns the original query returns:
-
-```
-?id=1' ORDER BY 1-- +     # ok
-?id=1' ORDER BY 2-- +     # ok
-?id=1' ORDER BY 3-- +     # error → there are 2 columns
-```
-
-Then we start pulling things out:
-
-```
-?id=1' UNION SELECT database(), version()-- +
-?id=1' UNION SELECT user, password FROM users-- +
-?id=1' UNION SELECT table_name, table_schema
-       FROM information_schema.tables
-       WHERE table_schema=database()-- +
-```
-
-DVWA's password MD5 hashes are well-known and crackable in seconds (they're intentionally weak). But the point isn't to crack those specific hashes — it's to realize that in a real app, vulnerable to the same pattern, I could read tables I should never see: customers, orders, sessions, anything the DB user has read permission on.
 
 ## What makes DVWA Low so vulnerable and what makes Impossible safe
 
@@ -195,7 +171,7 @@ Three concrete takeaways:
 - **HTTP is a layer that can betray you.** Browsers, URL encoding, server parsers: all things that can destroy a correct payload before it reaches the application. Learning to use Burp/curl early pays off immediately.
 - **Every SQLi is a variation of the same pattern.** Break the context, inject logic, neutralize the tail. Understanding the syntactic context your input lands in is the real mental exercise.
 
-The next step for me is **SQL Injection (Blind)**, where the comfort of error messages ends and you start extracting data one bit at a time with boolean or time-based queries. It's also where automating with `sqlmap` starts to feel natural (and almost necessary) — but only after doing the work by hand at least once, because a tool you don't understand makes you dangerous, not skilled.
+The next step is using the injected query to actually **read data** — not just bypass a filter. That's what `UNION SELECT` is for, and it's where the session gets genuinely interesting. More on that in the next post.
 
 ## Useful references
 
