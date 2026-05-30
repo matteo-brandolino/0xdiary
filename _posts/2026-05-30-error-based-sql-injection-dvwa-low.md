@@ -131,7 +131,7 @@ The pattern is the same everywhere: find a function that evaluates an expression
 
 **Turns out I was still on Low. The page said Medium. The cookie said otherwise.**
 
-*— continues in [Part 2: Medium level](/posts/error-based-sql-injection-dvwa-medium)*
+*— continues in [Part 2: Medium level]({% post_url 2026-05-30-error-based-sql-injection-dvwa-medium %})*
 
 ## Useful references
 
