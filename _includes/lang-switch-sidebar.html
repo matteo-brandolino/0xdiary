@@ -1,5 +1,8 @@
 {% comment %}
-  Site-wide language switcher, shown in the sidebar bottom bar on every page.
+  Site-wide language switcher, rendered as a small badge next to the site
+  title at the top of the sidebar (not a nav-item, not in the bottom
+  social-icon bar — it's a site-language toggle, not a section or a social
+  link, so it gets its own visually distinct spot).
 
   On a post page with a translated sibling (page.permalink_lang, populated by
   jekyll-polyglot when two posts share a page_id), links to that exact
@@ -20,8 +23,11 @@
   for documents with an explicit lang set), i.e. the literal string "/:title/".
   Gating on page.page_id (only ever set by us, on real translated pairs) skips
   that broken implicit pairing entirely.
+
+  Styled with an inline style rather than a class: Chirpy's production CSS is
+  a slim custom Sass bundle, not full Bootstrap, so a class like "badge" isn't
+  guaranteed to actually be styled. Inline keeps this independent of that.
 {% endcomment %}
-<span class="icon-border"></span>
 {% for target_lang in site.languages %}
   {% if target_lang != site.active_lang %}
     {% assign target_prefix = "" %}
@@ -39,8 +45,10 @@
     {% capture switch_label %}{% if target_lang == "it" %}IT{% else %}EN{% endif %}{% endcapture %}
     {% capture switch_aria %}{% if target_lang == "it" %}Passa all'italiano{% else %}Switch to English{% endif %}{% endcapture %}
 
-    <a {% static_href %}href="{{ switch_href }}"{% endstatic_href %} class="nav-link" aria-label="{{ switch_aria }}">
-      <i class="fas fa-language"></i> {{ switch_label }}
-    </a>
+    <a
+      {% static_href %}href="{{ switch_href }}"{% endstatic_href %}
+      aria-label="{{ switch_aria }}"
+      style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.03em; opacity: 0.6; margin-left: 0.4rem; vertical-align: middle; border: 1px solid currentColor; border-radius: 0.3rem; padding: 0.05rem 0.3rem;"
+    >{{ switch_label }}</a>
   {% endif %}
 {% endfor %}

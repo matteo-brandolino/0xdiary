@@ -11,7 +11,10 @@
       {%- endif -%}
     </a>
 
-    <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <div class="d-flex align-items-center justify-content-center flex-wrap">
+      <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      {% include lang-switch-sidebar.html %}
+    </div>
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
   </header>
   <!-- .profile-wrapper -->
@@ -37,6 +40,8 @@
         </li>
         <!-- .nav-item -->
       {% endfor %}
+      <!-- language switch -->
+      {% include lang-switch-sidebar.html %}
     </ul>
   </nav>
 
@@ -92,8 +97,6 @@
         <span class="icon-border"></span>
       {% endif %}
     {% endunless %}
-
-    {% include lang-switch-sidebar.html %}
 
     {% for entry in site.data.contact %}
       {%- assign url = null -%}
