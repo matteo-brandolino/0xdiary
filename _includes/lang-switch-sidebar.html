@@ -34,10 +34,15 @@
   centering. Absolute positioning removes it from that flow entirely, so the
   title stays exactly where it always was.
 
-  The visible label shows the CURRENT language (site.active_lang), not the
+  The visible flag shows the CURRENT language (site.active_lang), not the
   destination — a persistent "you are here" indicator you click to toggle,
   not an announcement of what you'll get. The href still points at the other
   language's page either way.
+
+  Vertically centered on the title's own line (top: 50% + translateY(-50%)
+  relative to the inline-block wrapper, whose height equals the title's line
+  height) rather than pinned to its top, so it reads as sitting beside the
+  text, not above it.
 {% endcomment %}
 {% for target_lang in site.languages %}
   {% if target_lang != site.active_lang %}
@@ -58,7 +63,7 @@
     <a
       {% static_href %}href="{{ switch_href }}"{% endstatic_href %}
       aria-label="{{ switch_aria }}"
-      style="position: absolute; top: 0; left: 100%; margin-left: 0.4rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.03em; opacity: 0.6; white-space: nowrap; border: 1px solid currentColor; border-radius: 0.3rem; padding: 0.05rem 0.3rem;"
-    >{{ site.active_lang | upcase }}</a>
+      style="position: absolute; top: 50%; left: 100%; transform: translateY(-50%); margin-left: 0.35rem; font-size: 1rem; line-height: 1; white-space: nowrap; text-decoration: none;"
+    >{% if site.active_lang == "it" %}🇮🇹{% else %}🇬🇧{% endif %}</a>
   {% endif %}
 {% endfor %}
