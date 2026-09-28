@@ -5,6 +5,9 @@ date: 2026-05-28
 categories: [web-security, walkthrough]
 tags: [sqli, blind-sqli, dvwa, boolean-based, burp-suite, mariadb]
 excerpt: "I tried UNION SELECT on the blind module and got nothing back. Then I spent twenty minutes asking the database yes/no questions one character at a time, and that's when I understood why sqlmap exists."
+lang: en
+page_id: blind-sql-injection-dvwa
+permalink: /posts/blind-sql-injection-dvwa/
 ---
 
 The previous session ended with a credential dump — five users, five MD5 hashes, the whole table. Clean, visible, satisfying. I moved to the Blind SQL Injection module expecting more of the same, typed `' UNION SELECT user,password FROM users-- +`, and got this:

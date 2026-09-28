@@ -5,6 +5,9 @@ date: 2026-05-18
 categories: [web-security, walkthrough]
 tags: [sqli, dvwa, mariadb, http, owasp]
 excerpt: "An honest walkthrough of DVWA's first SQLi module — including the two stupid errors I spent more time on than the actual attack."
+lang: en
+page_id: sql-injection-dvwa-first-steps
+permalink: /posts/sql-injection-dvwa-first-steps/
 ---
 
 SQL Injection is one of those attacks you read about a hundred times and think you understand. Then you fire up a vulnerable box, throw the classic `' OR 1=1--` at it, and get a beautiful **400 Bad Request** back. That's when you realize theory and practice are two different animals.

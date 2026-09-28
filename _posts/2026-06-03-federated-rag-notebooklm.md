@@ -5,6 +5,9 @@ date: 2026-06-03
 categories: [projects]
 tags: [rag, notebooklm, llm, regolo-ai, llamaindex, chromadb, fastapi, nextjs, ai]
 excerpt: "I have NotebookLM notebooks that know nothing about each other. Instead of accepting this as a fact of life, I started designing a fix."
+lang: en
+page_id: federated-rag-notebooklm
+permalink: /posts/federated-rag-notebooklm/
 ---
 
 Right now I have two NotebookLM notebooks for my PortSwigger Academy journey: one with SQL injection theory, one with lab sessions. As I keep working through the curriculum, there will be more — one per topic, probably, maybe one per difficulty tier. The structure makes sense while you're inside it.

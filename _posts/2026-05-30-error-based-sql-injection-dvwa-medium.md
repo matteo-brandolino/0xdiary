@@ -5,6 +5,9 @@ date: 2026-05-30
 categories: [web-security, walkthrough]
 tags: [sqli, error-based, dvwa, mariadb, burp-suite, hex-encoding]
 excerpt: "I thought I was testing Medium level for ten minutes. I was still on Low. A duplicate cookie was the culprit, and once I fixed it, I found out that mysqli_real_escape_string() on an unquoted integer is basically decorative."
+lang: en
+page_id: error-based-sql-injection-dvwa-medium
+permalink: /posts/error-based-sql-injection-dvwa-medium/
 ---
 
 *This is Part 2 of the error-based injection session. [Part 1]({% post_url 2026-05-30-error-based-sql-injection-dvwa-low %}) covered the technique on DVWA Low — EXTRACTVALUE, the 31-character limit, and CASE WHEN on MariaDB. This part picks up from the cliffhanger: I thought I had switched to Medium, but the cookie had other plans.*

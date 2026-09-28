@@ -1,0 +1,28 @@
+{% comment %}
+  Per-post language switcher. Relies on jekyll-polyglot's `page.permalink_lang`,
+  which it only populates for documents that share a `page_id` front matter value
+  across languages — so this renders nothing until a post actually has a translation.
+
+  page.permalink_lang[lang] holds the OTHER post's raw front-matter `permalink:`
+  value (bare, no baseurl, no language prefix — every post must set an explicit
+  literal `permalink:`, since Polyglot doesn't resolve Chirpy's `:title` template
+  default). The baseurl and the target language's own URL prefix are added here
+  manually, since Polyglot's automatic link-relativization prepends the CURRENT
+  page's language, not the switcher's target language.
+{% endcomment %}
+{% capture lang_links %}
+  {% for lang in site.languages %}
+    {% if page.permalink_lang[lang] and lang != site.active_lang %}
+      {% assign target_prefix = "" %}
+      {% unless lang == site.default_lang %}{% assign target_prefix = "/" | append: lang %}{% endunless %}
+      {% capture switch_href %}{{ site.baseurl }}{{ target_prefix }}{{ page.permalink_lang[lang] }}{% endcapture %}
+      <a {% static_href %}href="{{ switch_href }}"{% endstatic_href %}>
+        {% if lang == "it" %}🇮🇹 Leggi in italiano{% else %}🇬🇧 Read in English{% endif %}
+      </a>
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+{% assign lang_links = lang_links | strip %}
+{% if lang_links != "" %}
+  <p class="lang-switch text-muted">{{ lang_links }}</p>
+{% endif %}

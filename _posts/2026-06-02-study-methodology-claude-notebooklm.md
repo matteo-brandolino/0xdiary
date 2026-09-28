@@ -5,6 +5,9 @@ date: 2026-06-02
 categories: [tools, methodology]
 tags: [ai, notebooklm, claude, study-system, portswigger, methodology]
 excerpt: "I had five write-ups sitting in a folder and no idea what to do with them besides publish them. The answer turned out to involve two AI tools doing completely different jobs."
+lang: en
+page_id: study-methodology-claude-notebooklm
+permalink: /posts/study-methodology-claude-notebooklm/
 ---
 
 Five sessions in, I had a folder of write-ups and a vague sense that I was doing the right thing. I was documenting the mistakes, extracting the lessons, publishing them. Solid habit.

@@ -5,6 +5,9 @@ date: 2026-05-30
 categories: [web-security, walkthrough]
 tags: [sqli, error-based, dvwa, extractvalue, mariadb]
 excerpt: "UNION needed reflected output. Blind needed 220 requests. Error-based needed two. The database printed the full password hash inside its own error message, and I felt unreasonably clever about it — right up until I tried Medium."
+lang: en
+page_id: error-based-sql-injection-dvwa-low
+permalink: /posts/error-based-sql-injection-dvwa-low/
 ---
 
 The previous two sessions ended with credential dumps — one through UNION SELECT, one through 220 rounds of blind boolean extraction. UNION needed the output reflected in the page. Blind needed patience and Burp Intruder. This session is about a third technique: **error-based injection**, where you make the database generate an error whose text contains the data you want.

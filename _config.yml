@@ -8,6 +8,16 @@ theme: jekyll-theme-chirpy
 # otherwise, the layout language will use the default value of 'en'.
 lang: en
 
+# jekyll-polyglot: bilingual (EN/IT) site settings
+# lang_vars aliases `lang` so Polyglot overwrites site.lang itself on each per-language
+# build pass, which is what makes Chirpy's own _includes/lang.html locale resolution
+# (site.data.locales[site.lang]) pick the right language without any theme override.
+languages: ["en", "it"]
+default_lang: "en"
+lang_vars: ["lang"]
+exclude_from_localization: ["assets"]
+parallel_localization: true
+
 # Change to your timezone › https://zones.arilyn.cc
 timezone: Europe/Rome
 future: true
@@ -28,18 +38,15 @@ url: "https://matteo-brandolino.github.io"
 github:
   username: matteo-brandolino # change to your GitHub username
 
-twitter:
-  username: twitter_username # change to your Twitter username
-
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Matteo Brandolino
-  email: matteo-brandolino@example.com # change to your email address
+  email: matteo.brandolino@gmail.com
   fediverse_handle: # fill in your fediverse handle. E.g. "@username@domain.com"
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
+    - https://www.linkedin.com/in/matteo-brandolino/
     - https://github.com/matteo-brandolino # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
@@ -196,6 +203,9 @@ defaults:
 
 sass:
   style: compressed
+  # Works around a known SCSS sourcemap corruption issue when jekyll-polyglot's
+  # parallel per-language builds compile Sass concurrently.
+  sourcemap: never
 
 compress_html:
   clippings: all

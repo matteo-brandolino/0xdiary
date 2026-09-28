@@ -7,6 +7,8 @@ order: 4
 
 The assumption behind every post is that the honest mess is more useful than a clean walkthrough where everything works on the first try. If you've ever spent forty minutes debugging something that turned out to be a typo — welcome, you're among friends.
 
+Posts are published in English and Italian — use the language switch at the top of a post, or the 🇮🇹/🇬🇧 flag in the URL, to read the other version.
+
 ## How these posts are written
 
 Here's the workflow, in full transparency:

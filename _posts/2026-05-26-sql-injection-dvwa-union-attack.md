@@ -5,6 +5,9 @@ date: 2026-05-26
 categories: [web-security, walkthrough]
 tags: [sqli, dvwa, union-attack, mariadb, information_schema]
 excerpt: "The bypass from last time was just a door. UNION SELECT is what you do once you're inside — and it turns out the database will tell you almost everything if you ask in the right order."
+lang: en
+page_id: sql-injection-dvwa-union-attack
+permalink: /posts/sql-injection-dvwa-union-attack/
 ---
 
 Last time I got five usernames on screen by injecting `' OR 1=1-- +` and felt unreasonably proud of myself. Then I read what I'd actually done: bypassed a WHERE clause. I hadn't read anything I wasn't supposed to read. I'd just made the query return everything instead of one row.

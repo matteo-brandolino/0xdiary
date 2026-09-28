@@ -88,11 +88,41 @@ Every post that demonstrates an offensive technique must end with this (or equiv
 *All techniques shown were performed on an isolated lab environment. Running these attacks against systems you don't own or have written authorization to test is illegal in most jurisdictions.*
 ```
 
+The Italian version of the same post uses the Italian equivalent:
+
+```
+*Tutte le tecniche mostrate sono state eseguite in un ambiente di laboratorio isolato. Attaccare sistemi che non possiedi o per cui non hai un'autorizzazione scritta è illegale nella maggior parte delle giurisdizioni.*
+```
+
 ---
 
 ## Language
 
-English. Consistent American or British, but not mixed. Technical terms stay in their original form (SQL injection, not "SQL iniezione"). Tool names are exact (Burp Suite, not "burp", not "BurpSuite").
+English is the canonical language every post is written in first. Consistent American or British, but not mixed. Technical terms stay in their original form (SQL injection, not "SQL iniezione"). Tool names are exact (Burp Suite, not "burp", not "BurpSuite").
+
+The site is bilingual (see "Bilingual policy" below); the same "technical terms stay in their original form" rule applies to the Italian version too — SQL injection, not "SQL iniezione", even mid-sentence in Italian prose.
+
+## Bilingual policy
+
+Every post exists in English (canonical) and Italian (translation). Workflow:
+
+1. Write the English post first, following every rule in this file.
+2. Translate it into Italian as a genuine translation adapted for natural Italian phrasing and voice — not a literal, word-by-word rendering. Every voice/tone rule above (irony, self-directed sarcasm, no motivational language, no condescension, emotions only when real) applies equally to the Italian prose. It should read as if originally written in Italian, not translated.
+3. Technical terms, tool names, and code stay in English in both versions (see "Language" above).
+
+**Front matter additions** (on top of the schema below), required on every post in both languages:
+
+```yaml
+lang: en            # or: it
+page_id: some-shared-slug   # identical on both language versions of the same post — pairs them for the language switcher
+permalink: /posts/some-shared-slug/   # explicit and literal — see note below
+```
+
+`page_id` should be a short, stable slug (reusing the English post's filename slug is the simplest choice) and must match exactly between the English and Italian files.
+
+`permalink:` must be an explicit, literal URL — not left to the site-wide `/posts/:title/` template default. This is a jekyll-polyglot requirement, not a Chirpy one: the language switcher (`_includes/lang-switch.html`) reads `page.permalink_lang[lang]`, which Polyglot populates from each document's *raw* front-matter `permalink:` value — if that value is empty, Polyglot never resolves the `:title` template, and the switcher link comes out literally as `/posts/:title/`. Set it to whatever Chirpy's template would have generated anyway (bare, no `/it/` prefix, no baseurl — those are added automatically): `/posts/<filename-slug>/`.
+
+**File naming**: the Italian sibling lives in the same `_posts/` directory as the English post, with the same `date:`, and a naturally Italian slug in the filename — e.g. `_posts/2026-09-28-bscp-study-plan-interleaving.md` (English) and `_posts/2026-09-28-piano-di-studio-bscp-interleaving.md` (Italian). No language subfolders, no filename suffix convention.
 
 ---
 
@@ -106,6 +136,9 @@ date: YYYY-MM-DD
 categories: [web-security, walkthrough]   # or: [web-security, concept], [web-security, tools]
 tags: [specific, tags, here]
 excerpt: "One honest sentence about what this post is actually about."
+lang: en            # or: it — see "Bilingual policy"
+page_id: some-shared-slug
+permalink: /posts/some-shared-slug/
 ---
 ```
 
