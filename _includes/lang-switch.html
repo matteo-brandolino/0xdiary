@@ -12,7 +12,7 @@
 {% endcomment %}
 {% capture lang_links %}
   {% for lang in site.languages %}
-    {% if page.permalink_lang[lang] and lang != site.active_lang %}
+    {% if page.page_id and page.permalink_lang[lang] and lang != site.active_lang %}
       {% assign target_prefix = "" %}
       {% unless lang == site.default_lang %}{% assign target_prefix = "/" | append: lang %}{% endunless %}
       {% capture switch_href %}{{ site.baseurl }}{{ target_prefix }}{{ page.permalink_lang[lang] }}{% endcapture %}

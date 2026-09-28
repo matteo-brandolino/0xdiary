@@ -1,0 +1,46 @@
+{% comment %}
+  Site-wide language switcher, shown in the sidebar bottom bar on every page.
+
+  On a post page with a translated sibling (page.permalink_lang, populated by
+  jekyll-polyglot when two posts share a page_id), links to that exact
+  translation. On any other page — tabs, the homepage, or a post that has no
+  translation yet — falls back to the current page's own bare URL under the
+  target language's prefix. That fallback is safe because page.url is always
+  the bare, language-prefix-free permalink (Polyglot only adds the /it/ prefix
+  via the destination folder and a later regex pass over rendered links, never
+  by rewriting page.url itself) — so toggling the prefix lands on the correct
+  page for tabs/home, and on the graceful English-fallback Polyglot already
+  serves for an untranslated post under /it/.
+
+  page.page_id is required before trusting permalink_lang: when a page has no
+  explicit page_id front matter (all four tabs), Polyglot still auto-derives
+  one from the page's own URL and self-pairs it under the default_lang key —
+  but the value it stores there is the RAW, unresolved front-matter permalink
+  (tabs never get theirs resolved the way posts do, since that only happens
+  for documents with an explicit lang set), i.e. the literal string "/:title/".
+  Gating on page.page_id (only ever set by us, on real translated pairs) skips
+  that broken implicit pairing entirely.
+{% endcomment %}
+<span class="icon-border"></span>
+{% for target_lang in site.languages %}
+  {% if target_lang != site.active_lang %}
+    {% assign target_prefix = "" %}
+    {% unless target_lang == site.default_lang %}
+      {% assign target_prefix = "/" | append: target_lang %}
+    {% endunless %}
+
+    {% if page.page_id and page.permalink_lang[target_lang] %}
+      {% assign switch_path = page.permalink_lang[target_lang] %}
+    {% else %}
+      {% assign switch_path = page.url %}
+    {% endif %}
+
+    {% capture switch_href %}{{ site.baseurl }}{{ target_prefix }}{{ switch_path }}{% endcapture %}
+    {% capture switch_label %}{% if target_lang == "it" %}IT{% else %}EN{% endif %}{% endcapture %}
+    {% capture switch_aria %}{% if target_lang == "it" %}Passa all'italiano{% else %}Switch to English{% endif %}{% endcapture %}
+
+    <a {% static_href %}href="{{ switch_href }}"{% endstatic_href %} class="nav-link" aria-label="{{ switch_aria }}">
+      <i class="fas fa-language"></i> {{ switch_label }}
+    </a>
+  {% endif %}
+{% endfor %}

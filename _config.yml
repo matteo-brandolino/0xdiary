@@ -16,7 +16,13 @@ languages: ["en", "it"]
 default_lang: "en"
 lang_vars: ["lang"]
 exclude_from_localization: ["assets"]
-parallel_localization: true
+# Sequential, not parallel: Polyglot's "parallel" mode runs both language
+# passes as fibers inside one Ruby process rather than separate OS processes,
+# which has repeatedly leaked cross-pass state (a stale jekyll-include-cache
+# hit, an unresolved :title permalink template on tab fallback pages). Fully
+# sequential passes avoid that whole class of bug; the build is small enough
+# that the speed cost doesn't matter.
+parallel_localization: false
 
 # Change to your timezone › https://zones.arilyn.cc
 timezone: Europe/Rome
