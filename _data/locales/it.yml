@@ -5,6 +5,10 @@
 # jekyll-polyglot's `languages: ["en", "it"]` / `lang_vars: ["lang"]` setup. If Chirpy
 # updates its it-IT.yml translations upstream, re-sync this file by hand.
 
+# Site tagline, not part of Chirpy's own locale schema — _config.yml's `tagline:`
+# is a single global string, so this is read explicitly in _includes/sidebar.html.
+site_tagline: Diario di sicurezza applicativa
+
 # The layout text of site
 
 # ----- Commons label -----
