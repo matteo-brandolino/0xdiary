@@ -18,7 +18,7 @@ Lo scarto tra questi due fatti è tutto il post.
 
 ## Setup: una Mystery Lab, filtrata di proposito
 
-La [sessione precedente](/posts/xinclude-scansione-mirata-lettura-file/) era il primo lab vero con Burp Suite Professional. Questo è il secondo, ed è la prima volta che faccio quello che [il piano di studio](/posts/piano-di-studio-bscp-interleaving/) continuava a ripetermi di fare: aprire la **Mystery Lab Challenge** e farmi dare qualcosa senza etichetta.
+La [sessione precedente]({% post_url 2026-09-29-xinclude-scansione-mirata-lettura-file %}) era il primo lab vero con Burp Suite Professional. Questo è il secondo, ed è la prima volta che faccio quello che [il piano di studio]({% post_url 2026-09-28-piano-di-studio-bscp-interleaving %}) continuava a ripetermi di fare: aprire la **Mystery Lab Challenge** e farmi dare qualcosa senza etichetta.
 
 Solo che ho barato un po' — ho filtrato la Mystery Lab sulle **DOM-based vulnerabilities**, perché avevo appena passato un weekend a costruirci sopra una guida di studio (taint-flow, source e sink, Burp Scanner contro DOM Invader, tutta la mappa). Volevo allenare *quella* categoria. Quindi conoscevo la famiglia generale. Non conoscevo il bug specifico, il sink, né come consegnarlo — che è dove il lab vive davvero.
 
@@ -97,7 +97,7 @@ Capirlo mi ha preso più tempo del break-out, e la soluzione è il punto tecnico
 
 Il payload fa un round-trip: codificato all'andata attraverso il client, decodificato al ritorno attraverso il server. Le due trasformazioni si annullano a vicenda, e il break-out sopravvive.
 
-Ci sono arrivato solo guardando i due capi separatamente — il cookie salvato (`document.cookie` in console: **encoded**) contro l'`href` riflesso nella response (**decoded**). Se mi fossi fidato di uno solo, mi sarei raccontato una storia sbagliata: "è encoded, è morto" oppure "è decoded, qui non c'è niente". È la stessa lezione dell'[ultima volta](/posts/xinclude-scansione-mirata-lettura-file/), al quadrato — **ogni layer trasforma il dato, e leggere un layer solo non ti dice niente di certo sul prossimo.**
+Ci sono arrivato solo guardando i due capi separatamente — il cookie salvato (`document.cookie` in console: **encoded**) contro l'`href` riflesso nella response (**decoded**). Se mi fossi fidato di uno solo, mi sarei raccontato una storia sbagliata: "è encoded, è morto" oppure "è decoded, qui non c'è niente". È la stessa lezione dell'[ultima volta]({% post_url 2026-09-29-xinclude-scansione-mirata-lettura-file %}), al quadrato — **ogni layer trasforma il dato, e leggere un layer solo non ti dice niente di certo sul prossimo.**
 
 ## 5. Rifarlo con gli strumenti di Burp — e la categoria che si sgretola
 

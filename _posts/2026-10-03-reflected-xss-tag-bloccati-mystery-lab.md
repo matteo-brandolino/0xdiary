@@ -7,7 +7,7 @@ tags: [bscp, burp-suite, burp-intruder, burp-scanner, xss, reflected, waf-bypass
 excerpt: "Il probe è tornato indietro completamente nudo — parentesi angolari, virgolette, tutto raw, il classico caso 'nothing encoded'. Allora mando <script> e mi ritrovo un 400 'Tag is not allowed'. Il filtro sui caratteri e il filtro sui tag sono due muri diversi, e il probe ne vede uno solo."
 lang: it
 page_id: reflected-xss-tags-blocked-mystery-lab
-permalink: /posts/reflected-xss-tags-blocked-mystery-lab/
+permalink: /posts/reflected-xss-tag-bloccati-mystery-lab/
 ---
 
 Avevo mandato nel campo di ricerca il probe più innocuo che conosco — `zzz'"<>` — ed era tornato nella risposta completamente nudo: `'` raw, `"` raw, `<` raw, `>` raw, nemmeno un `&lt;` da nessuna parte. È il caso da manuale, il grado zero. Niente encoding. Quel tipo di riflessione in cui il payload è un copia-incolla dal libro e hai finito prima che il caffè si raffreddi.
@@ -25,7 +25,7 @@ Quel gap — aperto ai caratteri, chiuso al tag — è il post.
 
 ## Setup: seconda sessione XSS, Mystery Lab ancora filtrato
 
-La [sessione scorsa](/posts/dom-cookie-manipulation-mystery-lab/) era stata il mio primo XSS dentro il Mystery Lab Challenge — quello che si era rivelato un reflected XSS server-side travestito da "DOM". Questa è la seconda, stessa mossa: apro il Mystery Lab, lo filtro su **XSS** e lascio che mi serva qualcosa senza dirmi la difficoltà.
+La [sessione scorsa]({% post_url 2026-10-01-manipolazione-cookie-dom-mystery-lab %}) era stata il mio primo XSS dentro il Mystery Lab Challenge — quello che si era rivelato un reflected XSS server-side travestito da "DOM". Questa è la seconda, stessa mossa: apro il Mystery Lab, lo filtro su **XSS** e lascio che mi serva qualcosa senza dirmi la difficoltà.
 
 Ho camminato l'app con il proxy acceso, senza fare niente di furbo — solo costruendo la mappa di *dove torna il mio input*. Il campo di ricerca era il candidato ovvio. Uno scan mirato sulla request `GET /?search=...` e Burp l'ha segnalato subito:
 
@@ -70,7 +70,7 @@ Leggilo con la tabella in mano:
 2. **`<` e `>` sono raw** (non `&lt;`/`&gt;`) → posso aprire un tag. Porta spalancata.
 3. **Anche `'` e `"` sono raw** → potrei uscire da un attributo… solo che non *sono* dentro un attributo. Quelle `'...'` attorno sono decorazione del template, testo come tutto il resto. Niente da cui scappare.
 
-Quest'ultimo punto conta: in testo HTML libero **non c'è nessun break-out da fare**. A differenza del [lab sul cookie](/posts/dom-cookie-manipulation-mystery-lab/), dove dovevo chiudere una virgoletta *e* chiudere un tag *e* aprire il mio, qui apro un tag e basta, e il parser lo prende sul serio. Il probe diceva: *testo libero, le angolari passano, vai.*
+Quest'ultimo punto conta: in testo HTML libero **non c'è nessun break-out da fare**. A differenza del [lab sul cookie]({% post_url 2026-10-01-manipolazione-cookie-dom-mystery-lab %}), dove dovevo chiudere una virgoletta *e* chiudere un tag *e* aprire il mio, qui apro un tag e basta, e il parser lo prende sul serio. Il probe diceva: *testo libero, le angolari passano, vai.*
 
 E sono andato.
 

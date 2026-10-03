@@ -18,7 +18,7 @@ The gap between those two facts is the post.
 
 ## Setup: a Mystery Lab, filtered on purpose
 
-My [previous session](/posts/xinclude-targeted-scan-file-read/) was the first real lab with Burp Suite Professional. This is the second, and it's the first time I did what [the study plan](/posts/bscp-study-plan-interleaving/) kept nagging me to do: open the **Mystery Lab Challenge** and let it hand me something without a label.
+My [previous session]({% post_url 2026-09-29-xinclude-targeted-scan-file-read %}) was the first real lab with Burp Suite Professional. This is the second, and it's the first time I did what [the study plan]({% post_url 2026-09-28-bscp-study-plan-interleaving %}) kept nagging me to do: open the **Mystery Lab Challenge** and let it hand me something without a label.
 
 Except I cheated slightly — I filtered the Mystery Lab down to **DOM-based vulnerabilities**, because I'd just spent a weekend building a study guide on them (taint-flow, sources and sinks, Burp Scanner vs. DOM Invader, the whole map). I wanted to practise *that* category. So I knew the broad family. I did not know the specific bug, the sink, or how to deliver it — which is where the actual lab lives.
 
@@ -97,7 +97,7 @@ This took longer to understand than the break-out did, and the resolution is the
 
 The payload makes a round-trip: encoded going out through the client, decoded coming back through the server. The two transforms annihilate each other, and the break-out survives.
 
-I only nailed this by looking at the two ends separately — the stored cookie (`document.cookie` in the console: **encoded**) versus the reflected `href` in the response (**decoded**). If I'd trusted either one alone, I'd have told myself a wrong story: "it's encoded, it's dead" or "it's decoded, no problem here." It's the same lesson as [last time](/posts/xinclude-targeted-scan-file-read/), squared — **each layer transforms the data, and reading one layer tells you nothing certain about the next.**
+I only nailed this by looking at the two ends separately — the stored cookie (`document.cookie` in the console: **encoded**) versus the reflected `href` in the response (**decoded**). If I'd trusted either one alone, I'd have told myself a wrong story: "it's encoded, it's dead" or "it's decoded, no problem here." It's the same lesson as [last time]({% post_url 2026-09-29-xinclude-targeted-scan-file-read %}), squared — **each layer transforms the data, and reading one layer tells you nothing certain about the next.**
 
 ## 5. Doing it again with Burp's tools — and the category falling apart
 

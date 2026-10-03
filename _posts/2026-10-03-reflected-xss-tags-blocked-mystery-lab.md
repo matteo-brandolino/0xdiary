@@ -25,7 +25,7 @@ That gap — open to the characters, closed to the tag — is the post.
 
 ## Setup: second XSS session, still filtering the Mystery Lab
 
-The [last session](/posts/dom-cookie-manipulation-mystery-lab/) was my first XSS inside the Mystery Lab Challenge — the one that turned out to be server-side reflected XSS wearing a "DOM" label. This is the second, same move: open the Mystery Lab, filter it down to **XSS**, and let it hand me something without telling me the difficulty.
+The [last session]({% post_url 2026-10-01-dom-cookie-manipulation-mystery-lab %}) was my first XSS inside the Mystery Lab Challenge — the one that turned out to be server-side reflected XSS wearing a "DOM" label. This is the second, same move: open the Mystery Lab, filter it down to **XSS**, and let it hand me something without telling me the difficulty.
 
 I walked the app with the proxy on, doing nothing clever — just building the map of *where does my input come back*. The search box was the obvious candidate. A quick targeted scan on the `GET /?search=...` request, and Burp flagged it immediately:
 
@@ -70,7 +70,7 @@ Read it with the table in hand:
 2. **`<` and `>` are raw** (not `&lt;`/`&gt;`) → I can open a tag. Door wide open.
 3. **`'` and `"` are raw too** → I could break out of an attribute… except I'm not *in* an attribute. Those surrounding `'...'` are just template decoration, text like everything else. Nothing to escape.
 
-That last point matters: in free HTML text there's **no break-out to perform**. Unlike the [cookie lab](/posts/dom-cookie-manipulation-mystery-lab/), where I had to close a quote *and* close a tag *and* open my own, here I just open a tag and the parser takes it seriously. The probe said: *free text, brackets pass, go.*
+That last point matters: in free HTML text there's **no break-out to perform**. Unlike the [cookie lab]({% post_url 2026-10-01-dom-cookie-manipulation-mystery-lab %}), where I had to close a quote *and* close a tag *and* open my own, here I just open a tag and the parser takes it seriously. The probe said: *free text, brackets pass, go.*
 
 So I went.
 
