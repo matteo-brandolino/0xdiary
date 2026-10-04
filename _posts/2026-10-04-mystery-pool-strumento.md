@@ -3,7 +3,7 @@ layout: post
 title: "Mystery Pool: un lab casuale solo tra gli argomenti che scegli"
 date: 2026-10-04
 categories: [web-security, tools]
-tags: [portswigger, mystery-lab, javascript, samesite, cookie, github-pages]
+tags: [portswigger, mystery-lab, javascript, samesite, cookies, github-pages]
 excerpt: "Mystery Lab offre un argomento oppure tutti e venti, così ho costruito una piccola pagina statica che sorteggia un lab solo tra quelli che scegli, e ho scoperto quanto poco può sapere di te una pagina su un altro sito."
 lang: it
 page_id: mystery-pool
