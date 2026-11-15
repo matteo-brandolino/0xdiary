@@ -143,3 +143,34 @@ permalink: /posts/some-shared-slug/
 ```
 
 The excerpt should be the kind of sentence you'd say to a colleague: "I spent two hours trying to understand why my UNION payload kept breaking, turns out I had the column count wrong and the error message was telling me the whole time."
+
+---
+
+## Exam-oriented purpose (the overriding goal)
+
+Every post's ultimate purpose is to teach **how to pull this off in the BSCP exam** (Burp Suite Certified Practitioner), under time pressure. The lab or CTF session is the material; the exam is the point. A technique is not "understood" here until the post makes clear how you'd *recognize* it fast and *exploit* it reliably when the clock is running.
+
+This means every technical post must, somewhere, answer:
+
+- **How do I spot this fast?** The identification step — the fuzzer string, the response header, the DOM Invader / Param Miner run, the source-code tell — matters as much as the exploit. In the exam you win or lose on *speed of identification*, not on cleverness.
+- **Where does it sit in the exam chain?** Name the stage explicitly:
+  - **Stage 1 — Foothold:** content discovery, XSS, web cache poisoning, host header attacks, request smuggling, brute force, auth flaws.
+  - **Stage 2 — Privilege escalation:** CSRF / account takeover, password reset, SQLi, JWT, prototype pollution, access control, GraphQL, CORS.
+  - **Stage 3 — Data exfiltration:** XXE, SSRF, SSTI, path traversal, file upload, deserialization, OS command injection.
+- **Is it interactive or not?** Flag whether the exploit needs the simulated victim/admin to act. Non-interactive vulns are preferred in the exam because you don't wait on a victim — say so when it's relevant.
+- **What's the delivery?** If it needs a victim, how is the payload delivered (exploit server, iframe, cache poisoning to a page the victim already visits)? Web cache poisoning in particular is almost always a *delivery mechanism* for an XSS the victim would otherwise never trigger — frame it that way.
+- **Where's the rabbit hole?** Name the dead ends and time-sinks the exam punishes (keyed vs unkeyed confusion, wrong cached page, forgetting to drop the cache buster, assuming "Carlos" is the only target, etc.).
+
+## Reference approach to follow
+
+The methodology to follow — for both how to *attack in the exam* and how to *structure the write-up* — is the one in **botesjuan's BSCP study guide**: <https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study>
+
+Its per-technique pattern, which our posts should mirror (adapted to 0xdiary's diary voice, never copied):
+
+1. **Identify first** — detection before exploitation (fuzzer strings, source review, DOM Invader, Param Miner); find the sink / source / unkeyed input before weaponizing.
+2. **Confirm with a benign test** — a harmless probe (e.g. a dummy cookie to prove an XSS fires) before the real payload.
+3. **Exploit, out-of-band where needed** — exfil to Collaborator or the exploit-server log.
+4. **Deliver to the victim** — host on the exploit server / poison the cache; note exactly when victim interaction is required.
+5. **Link the lab** — end with the matching PortSwigger lab.
+
+Keep botesjuan's mindset notes in view when writing: targeted Scanner runs on specific insertion points (not broad crawls), source code as primary recon, prefer non-interactive vulns, watch for flagged dead ends, and practise the **Mystery Lab** challenge to cut identification time. Treat its payloads as lab-specific examples, not universal truth — our posts explain the *pattern* so the reader can re-derive the payload on a fresh exam instance.
