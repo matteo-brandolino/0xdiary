@@ -57,13 +57,13 @@ The exam sentence: in deserialization the exploit is not the data you send, it's
 
 A blog comment feature let me set the author display name, and that name came back **rendered** in the published comment. Input that lands inside a template instead of a query is the whole smell of server-side template injection — and it's a step-three favourite because a template engine with filesystem or OS access is one short step from RCE.
 
-The identification nuance is the part I'm proud of. I didn't fire a bare `{{7*7}}`; I sent `user.first_name}}{{7*7`. The reason: my input was already *inside* an expression (`{{ user.first_name }}`), so I had to **close that context** with `}}` before opening my own. The page printed `49` — breakout confirmed. To fingerprint the engine I'd normally run `{{7*'7'}}` (Python engines repeat the string → `7777777`; Twig coerces → `49`), but the exploit shape gave it away: this was **Tornado**. Breaking out and importing a module:
+The identification nuance is the part I'm proud of. I didn't fire a bare `{% raw %}{{7*7}}{% endraw %}`; I sent `{% raw %}user.first_name}}{{7*7{% endraw %}`. The reason: my input was already *inside* an expression (`{% raw %}{{ user.first_name }}{% endraw %}`), so I had to **close that context** with `}}` before opening my own. The page printed `49` — breakout confirmed. To fingerprint the engine I'd normally run `{% raw %}{{7*'7'}}{% endraw %}` (Python engines repeat the string → `7777777`; Twig coerces → `49`), but the exploit shape gave it away: this was **Tornado**. Breaking out and importing a module:
 
 ```
-user.name}}{% import os %}{{os.system('rm /home/carlos/morale.txt')}}
+{% raw %}user.name}}{% import os %}{{os.system('rm /home/carlos/morale.txt')}}{% endraw %}
 ```
 
-Close the original expression, `{% import os %}` pulls the module into the template namespace, `{{os.system(...)}}` executes. That's the step-three payoff stated plainly: the lab asked me to delete `morale.txt`, but once `os.system` is in your hand, `cat /home/carlos/secret` is the identical gesture. **A template engine that evaluates your string isn't an XSS risk — it's a shell.** The only trap is context: miscount the delimiters you're nested inside (`}}` vs `%}`) and your payload renders as text. Stage 3, non-interactive.
+Close the original expression, `{% raw %}{% import os %}{% endraw %}` pulls the module into the template namespace, `{% raw %}{{os.system(...)}}{% endraw %}` executes. That's the step-three payoff stated plainly: the lab asked me to delete `morale.txt`, but once `os.system` is in your hand, `cat /home/carlos/secret` is the identical gesture. **A template engine that evaluates your string isn't an XSS risk — it's a shell.** The only trap is context: miscount the delimiters you're nested inside (`}}` vs `%}`) and your payload renders as text. Stage 3, non-interactive.
 
 ### Roll 3 — Count the decodes (SSRF, blacklist filter)
 

@@ -12,7 +12,7 @@ permalink: /posts/the-wheel-starts-repeating/
 
 L'ho catalogato come CSRF prima di cliccare qualunque cosa — il form di cambio email, il riflesso che vuoi all'esame — e poi mi sono accorto che non stavo riconoscendo una *classe di vulnerabilità*. Stavo riconoscendo un *lab*. Su quello esatto avevo scritto milletrecento parole cinque giorni prima: il CRLF nella barra di ricerca, il `Set-Cookie: csrf=`, la difesa double-submit che crolla quando il cookie puoi piazzartelo da solo. Tutto. La ruota era tornata al punto di partenza, e l'unica cosa nuova era la velocità con cui lo vedevo.
 
-È tutto qui il post. Ho girato la mia [Mystery Pool]({% post_url 2026-10-04-mystery-pool %}) dieci volte nello step di escalation, e quattro dei dieci erano repliche — lab già risolti, uno già *pubblicato*. Per un minuto è sembrato un difetto dello strumento. Non lo è. Lo step due ha un numero finito di facce, e quando l'hai drillato abbastanza la ruota inizia a mostrarti sempre le stesse — e il tempo che prima spendevi a identificarle si riduce a niente. Qui le repliche non sono riempitivo. Sono la misura.
+È tutto qui il post. Ho girato la mia [Mystery Pool]({% post_url 2026-10-04-mystery-pool-strumento %}) dieci volte nello step di escalation, e quattro dei dieci erano repliche — lab già risolti, uno già *pubblicato*. Per un minuto è sembrato un difetto dello strumento. Non lo è. Lo step due ha un numero finito di facce, e quando l'hai drillato abbastanza la ruota inizia a mostrarti sempre le stesse — e il tempo che prima spendevi a identificarle si riduce a niente. Qui le repliche non sono riempitivo. Sono la misura.
 
 ## Il setup
 
@@ -210,6 +210,6 @@ Lo step due è, di fatto, mappato. In tre post l'ho ormai girato abbastanza da f
 - [PortSwigger: DOM XSS via client-side prototype pollution](https://portswigger.net/web-security/prototype-pollution/client-side/dom-xss/lab-dom-xss-via-client-side-prototype-pollution)
 - [sqlmap](https://sqlmap.org/) · [DOM Invader](https://portswigger.net/burp/documentation/desktop/tools/dom-invader) · [JWT Editor](https://portswigger.net/bappstore/26aaa5ded2f74beea19e2ed8345a93dd)
 - [botesjuan — Burp Suite Certified Practitioner Exam Study](https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study)
-- [Mystery Pool — lo strumento da cui arrivano questi roll]({% post_url 2026-10-04-mystery-pool %})
+- [Mystery Pool — lo strumento da cui arrivano questi roll]({% post_url 2026-10-04-mystery-pool-strumento %})
 
 *Tutte le tecniche mostrate sono state eseguite in un ambiente di laboratorio isolato (la Web Security Academy di PortSwigger). Attaccare sistemi che non possiedi o per cui non hai un'autorizzazione scritta è illegale nella maggior parte delle giurisdizioni.*

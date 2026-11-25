@@ -57,13 +57,13 @@ La frase da esame: nella deserialization l'exploit non è nei dati che mandi, è
 
 Una funzione di commento al blog mi faceva impostare il nome dell'autore, e quel nome tornava **renderizzato** nel commento pubblicato. Input che finisce dentro un template invece che in una query è tutto il profumo della server-side template injection — ed è un pezzo forte dello step tre perché un template engine con accesso al filesystem o all'OS è a un passo dall'RCE.
 
-La sottigliezza di identificazione è la parte di cui vado fiero. Non ho sparato un `{{7*7}}` nudo; ho mandato `user.first_name}}{{7*7`. Il motivo: il mio input era già *dentro* un'espressione (`{{ user.first_name }}`), quindi dovevo **chiudere quel contesto** con `}}` prima di aprire il mio. La pagina ha stampato `49` — breakout confermato. Per il fingerprint del motore di solito lancio `{{7*'7'}}` (i motori Python ripetono la stringa → `7777777`; Twig coercizza → `49`), ma la forma dell'exploit l'ha tradito: era **Tornado**. Breakout e import di un modulo:
+La sottigliezza di identificazione è la parte di cui vado fiero. Non ho sparato un `{% raw %}{{7*7}}{% endraw %}` nudo; ho mandato `{% raw %}user.first_name}}{{7*7{% endraw %}`. Il motivo: il mio input era già *dentro* un'espressione (`{% raw %}{{ user.first_name }}{% endraw %}`), quindi dovevo **chiudere quel contesto** con `}}` prima di aprire il mio. La pagina ha stampato `49` — breakout confermato. Per il fingerprint del motore di solito lancio `{% raw %}{{7*'7'}}{% endraw %}` (i motori Python ripetono la stringa → `7777777`; Twig coercizza → `49`), ma la forma dell'exploit l'ha tradito: era **Tornado**. Breakout e import di un modulo:
 
 ```
-user.name}}{% import os %}{{os.system('rm /home/carlos/morale.txt')}}
+{% raw %}user.name}}{% import os %}{{os.system('rm /home/carlos/morale.txt')}}{% endraw %}
 ```
 
-Chiudi l'espressione originale, `{% import os %}` porta il modulo nel namespace del template, `{{os.system(...)}}` esegue. È il payoff dello step tre detto chiaro: il lab mi chiedeva di cancellare `morale.txt`, ma una volta che hai `os.system` in mano, `cat /home/carlos/secret` è il gesto identico. **Un template engine che valuta la tua stringa non è un rischio XSS — è una shell.** L'unica trappola è il contesto: sbaglia a contare i delimitatori in cui sei annidato (`}}` o `%}`) e il payload viene renderizzato come testo. Stage 3, non interattivo.
+Chiudi l'espressione originale, `{% raw %}{% import os %}{% endraw %}` porta il modulo nel namespace del template, `{% raw %}{{os.system(...)}}{% endraw %}` esegue. È il payoff dello step tre detto chiaro: il lab mi chiedeva di cancellare `morale.txt`, ma una volta che hai `os.system` in mano, `cat /home/carlos/secret` è il gesto identico. **Un template engine che valuta la tua stringa non è un rischio XSS — è una shell.** L'unica trappola è il contesto: sbaglia a contare i delimitatori in cui sei annidato (`}}` o `%}`) e il payload viene renderizzato come testo. Stage 3, non interattivo.
 
 ### Roll 3 — Conta i decode (SSRF, blacklist filter)
 
